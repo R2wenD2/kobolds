@@ -30,13 +30,13 @@ type Gear struct {
 type Kobold struct {
 	Name                               string
 	Brawn, Ego, Extraneous, Reflexes   int
-	hits, meat, cunning, luck, agility int
-	skills                             []string
-	edges                              []string
-	bogies                             []string
-	armor                              Armor
-	gear                               Gear
-	weapon                             Weapon
+	Hits, Meat, Cunning, Luck, Agility int
+	Skills                             []string
+	Edges                              []string
+	Bogies                             []string
+	Armor                              Armor
+	Gear                               Gear
+	Weapon                             Weapon
 }
 
 func generateKobold() Kobold {
