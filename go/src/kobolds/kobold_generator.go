@@ -29,7 +29,7 @@ type Gear struct {
 
 type Kobold struct {
 	Name                               string
-	Brawn, Ego, Extraneous, reflexes   int
+	Brawn, Ego, Extraneous, Reflexes   int
 	hits, meat, cunning, luck, agility int
 	skills                             []string
 	edges                              []string
