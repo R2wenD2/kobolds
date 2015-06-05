@@ -1,8 +1,11 @@
 package main
 
-import "fmt"
+import (
+	"net/http"
+	"text/template"
+)
 
-// Indicates the skills of a Kobold
+// Weapon Indicates the skills of a Kobold
 type Weapon struct {
 	name  string
 	dam   int
@@ -25,8 +28,8 @@ type Gear struct {
 }
 
 type Kobold struct {
-	name                               string
-	brawn, ego, extraneous, reflexes   int
+	Name                               string
+	Brawn, Ego, Extraneous, reflexes   int
 	hits, meat, cunning, luck, agility int
 	skills                             []string
 	edges                              []string
@@ -44,11 +47,20 @@ func generateKobold() Kobold {
 	return Kobold{"klak", 1, 2, 3, 4, 5, 4, 3, 2, 1, p, p, p, armor, gear, weapon}
 }
 
-func displayKobold(kobold Kobold) {
-	fmt.Println(kobold)
+func handler(w http.ResponseWriter, r *http.Request) {
+
+	//fmt.Fprintf(w, , r.URL.Path[1:])
+	t, err := template.ParseFiles("templates/kobold_table.html")
+	if err != nil {
+		panic(err)
+	}
+	kobold := generateKobold()
+	t.Execute(w, kobold)
+
 }
 
 func main() {
-	kobold := generateKobold()
-	displayKobold(kobold)
+	http.HandleFunc("/", handler)
+	http.ListenAndServe(":8080", nil)
+	// displayKobold(kobold)
 }
