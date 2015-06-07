@@ -1,8 +1,10 @@
 package main
 
 import (
+	"math/rand"
 	"net/http"
 	"text/template"
+	"time"
 )
 
 // Weapon Indicates the skills of a Kobold
@@ -44,7 +46,9 @@ func generateKobold() Kobold {
 	weapon := Weapon{"knife", 1, "nil", "loser"}
 	gear := Gear{"hood", "nil", 1, 3}
 	armor := Armor{"ring", "nil", "nil", 3}
-	return Kobold{"klak", 1, 2, 3, 4, 5, 4, 3, 2, 1, p, p, p, armor, gear, weapon}
+	brawn := rollDice(2)
+	return Kobold{"klak", brawn, rollDice(2), rollDice(2), rollDice(2), brawn,
+		4, 3, 2, 1, p, p, p, armor, gear, weapon}
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
@@ -60,6 +64,15 @@ func handler(w http.ResponseWriter, r *http.Request) {
 }
 
 func init() {
-    http.HandleFunc("/", handler)
+	http.HandleFunc("/", handler)
 }
 
+func rollDice(num_dice int) int {
+	result := 0
+	r := rand.New(rand.NewSource(time.Now().UnixNano()))
+	for i := 0; i < num_dice; i++ {
+
+		result += r.Intn(7)
+	}
+	return result
+}
