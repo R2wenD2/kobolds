@@ -47,8 +47,15 @@ func generateKobold() Kobold {
 	gear := Gear{"hood", "nil", 1, 3}
 	armor := Armor{"ring", "nil", "nil", 3}
 	brawn := rollDice(2)
-	return Kobold{"klak", brawn, rollDice(2), rollDice(2), rollDice(2), brawn,
-		4, 3, 2, 1, p, p, p, armor, gear, weapon}
+	meat := calculateHandyNumber(brawn)
+	ego := rollDice(2)
+	cunning := calculateHandyNumber(ego)
+	extraneous := rollDice(2)
+	luck := calculateHandyNumber(extraneous)
+	reflexes := rollDice(2)
+	agility := calculateHandyNumber(reflexes)
+	return Kobold{"klak", brawn, ego, extraneous, reflexes, brawn,
+		meat, cunning, luck, agility, p, p, p, armor, gear, weapon}
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
@@ -75,4 +82,28 @@ func rollDice(num_dice int) int {
 		result += r.Intn(7)
 	}
 	return result
+}
+
+func calculateHandyNumber(stat int) int {
+
+	if stat < 5 {
+		return 1
+	}
+
+	if stat < 9 {
+		return 2
+	}
+
+	if stat < 13 {
+		return 3
+	}
+
+	if stat < 17 {
+		return 4
+	}
+
+	if stat < 21 {
+		return 5
+	}
+	return 0
 }
