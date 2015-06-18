@@ -44,7 +44,7 @@ type Kobold struct {
 func generateKobold() Kobold {
 	p := []string{"a"}
 	weapon := Weapon{"knife", 1, "nil", "loser"}
-	gear := Gear{"hood", "nil", 1, 3}
+	gear := getGear()
 	armor := Armor{"ring", "nil", "nil", 3}
 	brawn := rollDice(2)
 	meat := calculateHandyNumber(brawn)
@@ -56,6 +56,26 @@ func generateKobold() Kobold {
 	agility := calculateHandyNumber(reflexes)
 	return Kobold{"klak", brawn, ego, extraneous, reflexes, brawn,
 		meat, cunning, luck, agility, p, p, p, armor, gear, weapon}
+}
+
+func getGear() Gear {
+	// TODO(whillegas): make this a constant so we don't invoke it each time.
+	gearMap := map[int]Gear{
+		2:  Gear{"Cup of milk elemental summoning", "", 0, 0},
+		3:  Gear{"Bag of holding: chickens", "", 0, 0},
+		4:  Gear{"Ring of human speaking", "", 0, 0},
+		5:  Gear{"Codex of Tabriz the Arcane", "", 0, 0},
+		6:  Gear{"Random Booze", "", 0, 0},
+		7:  Gear{"Spice Sack", "", 0, 0},
+		8:  Gear{"BackPack", "", 0, 0},
+		9:  Gear{"Adventurer's cast-offs", "", 0, 0},
+		10: Gear{"25 feet of rope", "", 0, 0},
+		11: Gear{"10 Foot Pole", "", 0, 0},
+		12: Gear{"lint", "", 0, 0},
+	}
+
+	return gearMap[rollDice(2)]
+
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
